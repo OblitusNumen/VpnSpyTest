@@ -212,3 +212,21 @@ fun getNHopIp(ttl: Int): String? {
     }
     return null
 }
+
+
+fun getAllApps(context: Context): List<String> {
+    val packageManager = context.packageManager
+    val packages = packageManager.getInstalledApplications(0)
+
+    val apps = ArrayList<String>()
+    for (app in packages) {
+        val appName = packageManager.getApplicationLabel(app).toString()
+        val packageName = app.packageName
+
+        apps.add("App: $appName | Package: $packageName")
+    }
+
+    log(apps.find { it.contains("com.v2raytun.android") })
+
+    return apps
+}

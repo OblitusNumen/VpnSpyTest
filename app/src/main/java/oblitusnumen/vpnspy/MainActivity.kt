@@ -7,11 +7,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -117,12 +120,20 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
+                                Column(Modifier.horizontalScroll(rememberScrollState())) {
+                                var apps by remember { mutableStateOf<List<String>>(listOf()) }
                                 Button(onClick = {
 //                                        requestIgnoreBatteryOptimizations(this@MainActivity)
 //                                        apkPickerLauncher.launch(arrayOf("application/vnd.android.package-archive"))
-                                    startRecordingService(this@MainActivity)
+//                                    startRecordingService(this@MainActivity)
+                                    apps = getAllApps(context)
                                 }) {
-                                    Text("Select APK")
+                                    Text("Get all apps")
+                                }
+
+                                    for (app in apps) {
+                                        Text(app)
+                                    }
                                 }
                             }
                         }
